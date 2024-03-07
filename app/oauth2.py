@@ -9,7 +9,7 @@ oauth2_schemes = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 SECRET_KEY = "vON2Du4swE8QD7aI0plmnd3MSQpSrM3+qGCOcIeVYvajwy66UReI8ODI3cZuwrm1hjfRNp0RyXdmson2888ibg="
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_TIME = 2
+ACCESS_TOKEN_EXPIRE_TIME = 30
 
 def create_access_token(payload: dict):
     to_encode = payload.copy()
@@ -30,7 +30,6 @@ def verify_token(token: str, credentials_exception):
         username: str = payload.get("username")
         token_data = schemas.TokenData(id=id, email=email, username=username)
     except JWTError as e:
-        print(e)
         raise credentials_exception
     return token_data
 

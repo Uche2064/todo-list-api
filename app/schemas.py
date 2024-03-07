@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, EmailStr
-from typing import Optional
+from typing import Optional, Union
 from datetime import date, datetime, time
 
 
@@ -12,8 +12,8 @@ class User(BaseModel):
     
 class Todo(BaseModel):
     nom_todo: str
-    debut_todo: datetime
-    fin_todo: datetime
+    debut_todo: Optional[datetime] = None
+    fin_todo: Optional[datetime] = None
     
 # classes de creation
 
@@ -30,8 +30,8 @@ class CreateTodo(Todo):
 class TodoResponse(BaseModel):
     id: int
     nom_todo: str
-    debut_todo: datetime
-    fin_todo: datetime
+    debut_todo: Union[datetime, None]
+    fin_todo: Union[datetime, None]
     date_ajout_todo: datetime
     date_modif_todo: datetime
     user_id: Optional[int]
@@ -49,7 +49,11 @@ class UserResponse(BaseModel):
         from_attributes = True
     
 # classes de mise a jour
-class UserUpdate(User):
+class UserUpdate(BaseModel):
+    nom: Optional[str] = None
+    prenom: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
     date_modif: Optional[datetime] = None
     
 class LoginUser(BaseModel):

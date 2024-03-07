@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from .. import db, models, schemas, oauth2
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 router = APIRouter(
     prefix="/todo",
@@ -10,7 +11,9 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.TodoResponse])
-async def get_todos(get_current_user: schemas.TokenData = Depends(oauth2.get_current_user), db: Session = Depends(db.get_db)):
+async def get_todos(
+    get_current_user: schemas.TokenData = Depends(oauth2.get_current_user), 
+    db: Session = Depends(db.get_db)):
     # verifier si l'utilisateur existe
     get_user = db.query(models.User).filter(models.User.email == get_current_user.email).first()
     # si non, envoyer un message d'erreur et le renvoyer vers la partie creation
