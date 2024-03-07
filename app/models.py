@@ -10,7 +10,8 @@ class User(Base):
     nom = Column(String(50), nullable=False)
     prenom = Column(String(50))
     email = Column(String(50), nullable=False, unique=True, index=True)
-    date_ajoute = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
+    password = Column(String(256))
+    date_ajout = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
     date_modif = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
 
     todos = relationship("Todo", back_populates="owner")
@@ -20,11 +21,9 @@ class Todo(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     nom_todo = Column(String(256), nullable=False)
-    debut_todo = Column(Date, nullable=False)
-    temps_debut = Column(TIME, nullable=False)
-    fin_todo = Column(Date, nullable=False)
-    temps_fin = Column(TIME, nullable=False)
-    date_ajoute_todo = Column(TIMESTAMP, server_default=text("now()"), nullable=False)
+    debut_todo = Column(TIMESTAMP, nullable=False)
+    fin_todo = Column(TIMESTAMP, nullable=False)
+    date_ajout_todo = Column(TIMESTAMP, server_default=text("now()"), nullable=False)
     date_modif_todo = Column(TIMESTAMP, server_default=text("now()"), nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'))
     

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .db import Base, engine
 from . import models
-from .routers import users, todo
+from .routers import users, todo, auth
 
 app = FastAPI()
 
@@ -14,3 +14,4 @@ except Exception as e:
     
 app.include_router(users.router)
 app.include_router(todo.router)
+app.include_router(auth.router)
