@@ -14,6 +14,7 @@ class Todo(BaseModel):
     nom_todo: str
     debut_todo: Optional[datetime] = None
     fin_todo: Optional[datetime] = None
+    description_todo: Optional[str] = None
     
 # classes de creation
 
@@ -32,6 +33,7 @@ class TodoResponse(BaseModel):
     nom_todo: str
     debut_todo: Union[datetime, None]
     fin_todo: Union[datetime, None]
+    description_todo: Optional[str] = None
     date_ajout_todo: datetime
     date_modif_todo: datetime
     user_id: Optional[int]
